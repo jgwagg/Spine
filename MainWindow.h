@@ -26,6 +26,7 @@ private:
     QMap<Vertebrae, QPolygonF> _vPolys;
     QGraphicsScene _scene;
     static QMap<Vertebrae, QPolygonF> iVertPolys;
+    static QMap<Vertebrae, QString> vertLabels;
 };
 
 #endif // MAINWINDOW_H
