@@ -42,8 +42,11 @@ void MainWindow::drawSpine()
         _scene.addPolygon(p, pen, vertBrush);
     }
     ui->graphicsView->setScene(&_scene);
-//    ui->graphicsView->fitInView(_scene.itemsBoundingRect(),Qt::KeepAspectRatio);
-//    ui->graphicsView->fitInView(_scene.sceneRect(),Qt::KeepAspectRatio);
     ui->graphicsView->show();
     
+}
+
+void MainWindow::showEvent(QShowEvent *)
+{
+    ui->graphicsView->fitInView(_scene.itemsBoundingRect(),Qt::KeepAspectRatio);    
 }

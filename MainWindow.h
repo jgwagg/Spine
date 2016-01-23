@@ -19,6 +19,7 @@ public:
     ~MainWindow();
     void drawSpine();
     enum Vertebrae { L1, L2, L3, L4, L5, S1 };
+    void showEvent(QShowEvent *);
     
 private:
     Ui::MainWindow *ui;
