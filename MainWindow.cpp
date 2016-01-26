@@ -1,7 +1,8 @@
+#include <QGraphicsItem>
+#include <QMetaEnum>
+
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "QGraphicsItem"
-#include <QMetaEnum>
 
 
 namespace { 
@@ -16,8 +17,6 @@ QVector<QPointF> iS1{{700,922},{607,819},{523,895},{616,998}};
 }
 QMap<MainWindow::Vertebrae, QPolygonF> MainWindow::iVertPolys{
     {L1,iL1}, {L2,iL2}, {L3,iL3}, {L4,iL4}, {L5,iL5}, {S1,iS1} };
-//QMap<MainWindow::Vertebrae, QString> MainWindow::vertLabels{
-//    {L1,"L1"}, {L2,"L2"}, {L3,"L3"}, {L4,"L4"}, {L5,"L5"}, {S1,"S1"} };
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -38,24 +37,22 @@ MainWindow::~MainWindow()
 void MainWindow::drawSpine()
 {
     QPen pen(Qt::NoPen);    
-    QBrush vertBrush;
-    vertBrush.setColor(Vertebrae_Color);
-    vertBrush.setStyle(Qt::SolidPattern);
+    QBrush vertBrush(Vertebrae_Color, Qt::SolidPattern);
+    QFont sansFont("Helvetica", 12, QFont::Bold);
     for(QMap<Vertebrae, QPolygonF>::iterator& kv = _vPolys.begin(); kv != _vPolys.end(); ++kv)
     {
         _scene.addPolygon(kv.value(), pen, vertBrush);
         auto gsti = _scene.addSimpleText(vertebraeToString(kv.key()));
         gsti->setPos(kv.value().boundingRect().center() - gsti->boundingRect().center());
+        gsti->setFont(sansFont);
     }
     ui->graphicsView->setScene(&_scene);
     ui->graphicsView->show();
-    
 }
 
 const char *MainWindow::vertebraeToString(MainWindow::Vertebrae v)
 {
-    auto metaEnum = QMetaEnum::fromType<MainWindow::Vertebrae>();
-    const char* ret = metaEnum.valueToKey(v);
+    const char* ret = QMetaEnum::fromType<MainWindow::Vertebrae>().valueToKey(v);
     return (ret ? ret : "invalid");
 }
 
