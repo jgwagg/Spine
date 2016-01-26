@@ -19,6 +19,9 @@ public:
     ~MainWindow();
     void drawSpine();
     enum Vertebrae { L1, L2, L3, L4, L5, S1 };
+    Q_ENUM(Vertebrae)
+    const char *vertebraeToString(Vertebrae v);
+    
     void showEvent(QShowEvent *);
     
 private:
